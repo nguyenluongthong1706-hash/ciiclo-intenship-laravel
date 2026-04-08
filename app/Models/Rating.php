@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquence\Concerns\Uuids;
-#[Fillable(['point','reviewer_id','post_id'])]
+#[Fillable(['vote','reviewer_id','post_id'])]
 class Rating extends Model
 {
     use HasUuids;
