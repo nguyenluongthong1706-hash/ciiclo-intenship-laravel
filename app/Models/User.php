@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquence\Concerns\Uuids;
-use Illuminate\Database\Eloquence\Relations\HasMany;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 #[Table('users')]
 #[Fillable(['name','email','password','role','avatar'])]
 #[Hidden(['password','remember_token'])]
 class User extends Model
 {
-    use Uuids;
+    use HasFactory, HasUuids;
     
     public function post():HasMany{
         return $this->hasMany(Post::class,'author_id','id');

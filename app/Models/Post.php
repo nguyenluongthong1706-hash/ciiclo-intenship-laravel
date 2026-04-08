@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquence\Concerns\Uuids;
-use Illuminate\Database\Eloquence\Relations\BelongsTo;
-use Illuminate\Database\Eloquence\Relations\HasMany;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 #[Table('posts')]
 #[Fillable(['title', 'content', 'author_id','category_id'])]
 class Post extends Model
 {
-    use HasUuids;
+    use HasFactory, HasUuids;
     
     public function category():BelongsTo{
         return    $this->belongsTo(Category::class, 'category_id','id');
