@@ -1,0 +1,44 @@
+<?php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AccountController;
+use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ReactionController;
+
+Route::get('/', function(){
+    return "Wellcome our app";
+});
+
+Route::controller(AuthController::class)->group(function(){
+    Route::prefix('auth')->group(function(){
+        Route::post('/register', 'register');
+        Route::post('/login','login');
+    });
+});
+
+Route::middleware(['auth:sanctum'])->group(function(){
+    // define logout route
+    Route::post('auth/logout',[AuthController::class, 'logout']);
+
+    // group account controller
+    Route::controller(AccountController::class)->group(function(){
+        Route::prefix('users')->group(function(){
+            Route::get('/me', 'getProfile');
+            Route::put('/me', 'updateProfile');
+        });
+    });
+
+    Route::apiResource('posts', PostController::class);
+    Route::prefix('posts')->group(function(){
+        Route::post('/{post_id}/reactions',[ReactionController::class, 'makeReaction']);
+        Route::put('/{post_id}/reactions',[ReactionController::class,'makeReaction']);
+        Route::delete('/{post_id}/reactions',[ReactionController::class,'deleteReaction']);
+    });
+
+    Route::apiResource('categories', CategoryController::class);
+
+
+});

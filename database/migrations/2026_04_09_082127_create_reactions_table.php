@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ratings', function (Blueprint $table) {
+        Schema::create('reactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->tinyInteger('vote');
-            $table->foreignUuid('reviewer_id')->constrained('users');
+            $table->enum('type',['like','dislike','love','angry']);
+            $table->foreignUuid('reviewer_id')->constrained(table:'users');
             $table->foreignUuid('post_id')->constrained();
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ratings');
+        Schema::dropIfExists('reactions');
     }
 };
