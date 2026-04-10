@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Rating;
+use App\Models\Reaction;
 use App\Models\User;
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<Rating>
  */
-class RatingFactory extends Factory
+class ReactionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,7 +20,7 @@ class RatingFactory extends Factory
     public function definition(): array
     {
         return [
-            'vote' => fake()->numberBetween(1,5),
+            'type' => fake()->randomElement(['like','dislike','love','angry']),
             'reviewer_id' => User::inRandomOrder()->first()->id,
             'post_id' => Post::inRandomOrder()->first()->id
         ];

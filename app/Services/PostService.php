@@ -1,0 +1,28 @@
+<?php
+namespace App\Services;
+
+use App\Repositories\PostRepository;
+
+class PostService{
+    public function __construct(private PostRepository $postRepository){}
+
+    public function getAll (){
+        return $this->postRepository->all();
+    }
+
+    public function show ($id){
+        return $this->postRepository->find($id);
+    }
+    
+    public function store(array $data){
+        return $this->postRepository->create($data);
+    }
+
+    public function update (array $data, $id){
+        return $this->postRepository->update($data, $id);
+    }
+
+    public function destroy ($id){
+        return $this->postRepository->delete($id);
+    }
+}

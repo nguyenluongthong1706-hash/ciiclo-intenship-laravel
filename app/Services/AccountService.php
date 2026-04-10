@@ -1,0 +1,16 @@
+<?php
+namespace App\Services;
+
+use App\Repositories\AccountRepository;
+
+class AccountService{
+    public function __construct(private AccountRepository $accountRepository){}
+
+    public function getById($id){
+        return $this->accountRepository->find($id);
+    }
+
+    public function updateProfile(array $data, $id){
+        return $this->accountRepository->update($data, $id);
+    }
+}
