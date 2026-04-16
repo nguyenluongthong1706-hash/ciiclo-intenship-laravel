@@ -5,26 +5,37 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 
 class AuthController extends Controller
 {
     public function __construct(private AuthService $authService){}
     
-    public function register(Request $request){
-        $user = $this->authService->register($request->all());
+    public function register(RegisterRequest $request){
+
+        $user = $this->authService->register($request->validated());
         
         if(!$user){
-            return response()->json(['message'=>'register fail'], 401);
+            return response()->json([
+                'message'=>'register fail',
+            ], 400);
         }
 
-        return response()->json(['user'=>$user],200);
+        return response()->json([
+            'message'=>'register successfully',
+        ],200);
     }
 
-    public function login(Request $request){
-        $user = $this->authService->login($request->all());
+    public function login(LoginRequest $request){
+        $user = $this->authService->login($request->validated());
 
         if(!$user){
-            return response()->json(['message'=>'Invalid Credentials'], 401);
+            return response()->json([
+                'message'=>'Invalid Credentials',
+                'user'=>null,
+                'token'=>null,
+                ], 401);
         }
 
         $user->tokens()->delete();
@@ -32,7 +43,11 @@ class AuthController extends Controller
         // create token and get token by text for client
         $token = $user->createToken('api-token')->plainTextToken;
 
-        return response()->json(['user'=>$user, 'token'=>$token],200);
+        return response()->json([
+            'message'=>'Login successfully',
+            'user'=>$user,
+            'token'=>$token,
+        ],200);
     }
 
     public function logout(Request $request){

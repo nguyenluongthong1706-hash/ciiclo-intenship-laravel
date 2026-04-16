@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+$database = $this->app->make('database');
+$database = Shama;
+
 return new class extends Migration
 {
     /**

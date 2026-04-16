@@ -28,15 +28,17 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::prefix('users')->group(function(){
             Route::get('/me', 'getProfile');
             Route::put('/me', 'updateProfile');
+            Route::get('/posts',[PostController::class, 'getByUser']);
         });
     });
 
-    Route::apiResource('posts', PostController::class);
     Route::prefix('posts')->group(function(){
         Route::post('/{post_id}/reactions',[ReactionController::class, 'makeReaction']);
         Route::put('/{post_id}/reactions',[ReactionController::class,'makeReaction']);
         Route::delete('/{post_id}/reactions',[ReactionController::class,'deleteReaction']);
     });
+    Route::apiResource('posts', PostController::class);
+
 
     Route::apiResource('categories', CategoryController::class);
 
