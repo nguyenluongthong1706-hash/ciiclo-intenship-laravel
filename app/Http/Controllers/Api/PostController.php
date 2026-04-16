@@ -20,7 +20,8 @@ class PostController extends Controller
     {
         $posts = $this->postService->getAll();
 
-        return response()->json(['posts'=>$posts],200);
+        $posts = PostResource::collection($posts);
+        return response()->json(['message'=>"Get post successfully", 'posts'=>$posts],200);
     }
 
 
@@ -30,7 +31,7 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
 
-        $post = $this->postService->store($request->validated());
+        $post = $this->postService->store($request->validated(), $request->user()->id);
 
         if(!$post){
             return response()->json(['message'=>'Create post fail'], 400);
@@ -41,14 +42,14 @@ class PostController extends Controller
 
     public function getByUser(Request $request)
     {
-        $post = $this->postService->getByUser($request->user()->id);
+        $posts = $this->postService->getByUser($request->user()->id);
 
-        if(!$post){
-            return response()->json(['message'=>"Post is not exists"],400);
+        if(!$posts){
+            return response()->json(['message'=>"Post is not exists",'posts'=>null],400);
         }
 
-        $post = PostResource::collection($post);
-        return response()->json(['post'=>$post],200);
+        $posts = PostResource::collection($posts);
+        return response()->json(['message'=>"Get post successfully", 'posts'=>$posts],200);
     }
 
     /**
@@ -59,10 +60,10 @@ class PostController extends Controller
         $post = $this->postService->show($id);
 
         if(!$post){
-            return response()->json(['message'=>"Post is not exists"],400);
+            return response()->json(['message'=>"Post is not exists", 'post'=>null],400);
         }
 
-        return response()->json(['post'=>$post],200);
+        return response()->json(['message'=>"Get post successfully", 'post'=>$post],200);
     }
 
     /**

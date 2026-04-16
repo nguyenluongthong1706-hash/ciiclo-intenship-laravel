@@ -16,7 +16,7 @@ class CategoryController extends Controller
     {
         $categories = $this->categoryService->getAll();
 
-        return response()->json(['categories'=>$categories],200);
+        return response()->json(['message'=>"Get Category successfully", 'categories'=>$categories],200);
     }
 
     /**
@@ -27,7 +27,7 @@ class CategoryController extends Controller
         $category = $this->categoryService->store($request->all());
 
         if(!$category){
-            return response()->json(['message'=>"Create Category fail"],400);
+            return response()->json(['message'=>"Create Category fail",  'category'=>null],400);
         }
 
         return response()->json(['message'=>"Create Category successfully"],200);
@@ -41,10 +41,10 @@ class CategoryController extends Controller
         $category = $this->categoryService->show($id);
 
         if(!$category){
-            return response()->json(['message'=>"Category is not exists"],400);
+            return response()->json(['message'=>"Category is not exists", 'category'=>null],400);
         }
 
-        return response()->json(['category'=>$category],200);
+        return response()->json(['message'=>"Get Category successfully", 'category'=>$category],200);
     }
 
     /**

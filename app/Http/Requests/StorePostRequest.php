@@ -25,8 +25,8 @@ class StorePostRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'min:3', 'max:100'],
             'content'=> ['required', 'string', 'min:3',],
-            'category_id' => ['required', 'exists:categories,id'],
-            'author_id' => ['required', 'exists:users,id'],
+            'category_id' => ['nullable', 'exists:categories,id'],
+            'author_id' => ['nullable', 'exists:users,id'],
         ];
     }
 }

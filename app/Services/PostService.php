@@ -18,7 +18,8 @@ class PostService{
         return $this->postRepository->find($id);
     }
     
-    public function store(array $data){
+    public function store(array $data, $id){
+        $data['author_id'] = $id;
         return $this->postRepository->create($data);
     }
 

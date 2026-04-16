@@ -14,6 +14,7 @@ class PostResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $reactions = $this->reactions ?? collect();
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -28,6 +29,17 @@ class PostResource extends JsonResource
                 'id' => $this->author?->id,
                 'name' => $this->author?->name,
             ],
+
+            'reaction_count' => [
+                'like' => $reactions->where('type', 'like')->count(),
+                'dislike' => $reactions->where('type', 'dislike')->count(),
+                'love' => $reactions->where('type', 'love')->count(),
+                'angry' => $reactions->where('type', 'angry')->count(),
+            ],
+
+            'my_reaction' => optional(
+                $reactions->where('reviewer_id', $request->user()?->id)->first()
+            )->type,
 
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
