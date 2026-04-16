@@ -10,6 +10,10 @@ class PostService{
         return $this->postRepository->all();
     }
 
+    public function getByUser ($id){
+        return $this->postRepository->getByUser($id);
+    }
+
     public function show ($id){
         return $this->postRepository->find($id);
     }
