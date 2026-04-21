@@ -26,4 +26,11 @@ class MakeReactionRequest extends FormRequest
             'type'=>['required', 'in:like,dislike,love,angry']
         ];
     }
+
+    public function messages():array{
+        return [
+            'type.required' => 'Trường :attribute là bắt buộc',
+            'type.in' => 'Trường :attribute bắt buộc phải là các giá trị: :values',
+        ];
+    }    
 }

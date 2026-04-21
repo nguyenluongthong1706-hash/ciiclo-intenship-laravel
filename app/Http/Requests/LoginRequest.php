@@ -27,4 +27,16 @@ class LoginRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'max:255']
         ];
     }
+
+    public function messages():array{
+        return [
+            'email.required' => 'Trường :attribute là bắt buộc',
+            'email.email' => 'Email phải thuộc dạng email',
+
+            'password.required' => 'Trường :attribute là bắt buộc',
+            'password.string' => 'Password phải là chuỗi ký tự',
+            'password.min' => 'Password phải ít nhất 8 ký tự',
+            'password.max' => 'Password phải nhiều nhất 255 ký tự',
+        ];
+    }
 }

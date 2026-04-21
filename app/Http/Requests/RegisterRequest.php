@@ -29,4 +29,21 @@ class RegisterRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed']
         ];
     }
+
+    public function messages(): array{
+        return [
+            'name.required' => 'Trường :attribute là bắt buộc',
+            'name.min' => 'Tên phải có ít nhất :min ký tự',
+            'name.max' => 'Tên phải có ít nhất :max ký tự',
+
+            'email.required' => 'Trường :attribute là bắt buộc',
+            'email.email' => 'Email không hợp lệ',
+            'email.unique' => 'Email đã tồn tại',
+
+            'password.required' => 'Trường :attribute là bắt buộc',
+            'password.min' => 'Mật khẩu phải có ít nhất :min ký tự',
+            'password.max' => 'Mật khẩu phải có ít nhất :max ký tự',
+            'password.confirmed' => 'Mật khẩu xác nhận không khớp',
+        ];
+    }
 }

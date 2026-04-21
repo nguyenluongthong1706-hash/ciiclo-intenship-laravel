@@ -28,4 +28,18 @@ class UpdatePostRequest extends FormRequest
             'category_id' => ['nullable', 'exists:categories,id'],
         ];
     }
+
+    public function messages(): array{
+        return [
+            'title.required' => 'Trường :attribute là bắt buộc',
+            'title.min' => 'Tiêu đề phải có ít nhất :min ký tự',
+            'title.max' => 'Tiêu đề phải có nhiều nhất :max ký tự',
+
+            'content.required' => 'Trường :attribute là bắt buộc',
+            'content.min' => 'Nội dung phải có ít nhất :min ký tự',
+            'content.max' => 'Nội dung phải có nhiều nhất :max ký tự',
+
+            'category_id.exists' => 'Danh mục không tồn tại',
+        ];
+    }
 }

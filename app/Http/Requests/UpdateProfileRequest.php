@@ -27,4 +27,16 @@ class UpdateProfileRequest extends FormRequest
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ];
     }
+
+    public function messages(): array{
+        return [
+            'name.string' => 'Tên phải là chuỗi ký tự',
+            'name.min' => 'Tên phải có ít nhất :min ký tự',
+            'name.max' => 'Tên phải có nhiều nhất :max ký tự',
+
+            'avatar.image' => 'Avatar phải là hình ảnh',
+            'avatar.mimes' => 'Avatar phải có định dạng jpg, jpeg hoặc png',
+            'avatar.max' => 'Avatar không được vượt quá :max KB',
+        ];
+    }
 }
