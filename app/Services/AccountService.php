@@ -6,7 +6,7 @@ use App\Repositories\AccountRepository;
 class AccountService{
     public function __construct(private AccountRepository $accountRepository){}
 
-    public function getById($id){
+    public function find($id){
         return $this->accountRepository->find($id);
     }
 

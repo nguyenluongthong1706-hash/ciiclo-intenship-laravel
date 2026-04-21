@@ -20,8 +20,7 @@ class PostController extends Controller
     {
         $posts = $this->postService->getAll();
 
-        $posts = PostResource::collection($posts);
-        return response()->json(['message'=>"Get post successfully", 'posts'=>$posts],200);
+        return response()->json(['message'=>"Lấy danh sách bài đăng thành công!", 'data'=>PostResource::collection($posts)],200);
     }
 
 
@@ -33,23 +32,14 @@ class PostController extends Controller
 
         $post = $this->postService->store($request->validated(), $request->user()->id);
 
-        if(!$post){
-            return response()->json(['message'=>'Create post fail'], 400);
-        }
-
-        return response()->json(['message'=>"Create successfully"],200);
+        return response()->json(['message'=>"Tạo bài đăng thành công!"],201);
     }
 
     public function getByUser(Request $request)
     {
         $posts = $this->postService->getByUser($request->user()->id);
 
-        if(!$posts){
-            return response()->json(['message'=>"Post is not exists",'posts'=>null],400);
-        }
-
-        $posts = PostResource::collection($posts);
-        return response()->json(['message'=>"Get post successfully", 'posts'=>$posts],200);
+        return response()->json(['message'=>"Lấy thông tin danh sách bài đăng của tài khoản thành công!", 'data'=>PostResource::collection($posts)],200);
     }
 
     /**
@@ -59,11 +49,7 @@ class PostController extends Controller
     {
         $post = $this->postService->show($id);
 
-        if(!$post){
-            return response()->json(['message'=>"Post is not exists", 'post'=>null],400);
-        }
-
-        return response()->json(['message'=>"Get post successfully", 'post'=>$post],200);
+        return response()->json(['message'=>"Lấy thông tin bài đăng thành công!", 'data'=>$post],200);
     }
 
     /**
@@ -73,11 +59,7 @@ class PostController extends Controller
     {
         $post = $this->postService->update($request->validated(),$id);
 
-        if(!$post){
-            return response()->json(['message'=>"Update post fail"],400);
-        }
-
-        return response()->json(['message'=>"Update successfully"], 200);
+        return response()->json(['message'=>"Cập nhật bài đăng thành công!"], 200);
     }
 
     /**
@@ -87,10 +69,6 @@ class PostController extends Controller
     {
         $post = $this->postService->destroy($id);
 
-        if(!$post){
-            return response()->json(['message'=>"Delete post fail"],400);
-        }
-
-        return response()->json(['message'=>"Delete post successfully"],200);
+        return response()->json(['message'=>"Xóa bài đăng thành công!"],200);
     }
 }

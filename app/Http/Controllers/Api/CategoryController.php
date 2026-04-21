@@ -16,7 +16,7 @@ class CategoryController extends Controller
     {
         $categories = $this->categoryService->getAll();
 
-        return response()->json(['message'=>"Get Category successfully", 'categories'=>$categories],200);
+        return response()->json(['message'=>"Lấy danh sách category thành công", 'data'=>$categories],200);
     }
 
     /**
@@ -26,11 +26,7 @@ class CategoryController extends Controller
     {
         $category = $this->categoryService->store($request->all());
 
-        if(!$category){
-            return response()->json(['message'=>"Create Category fail",  'category'=>null],400);
-        }
-
-        return response()->json(['message'=>"Create Category successfully"],200);
+        return response()->json(['message'=>"Tạo category thành công"],201);
     }
 
     /**
@@ -40,11 +36,7 @@ class CategoryController extends Controller
     {
         $category = $this->categoryService->show($id);
 
-        if(!$category){
-            return response()->json(['message'=>"Category is not exists", 'category'=>null],400);
-        }
-
-        return response()->json(['message'=>"Get Category successfully", 'category'=>$category],200);
+        return response()->json(['message'=>"Lấy category thành công", 'data'=>$category],200);
     }
 
     /**
@@ -54,11 +46,8 @@ class CategoryController extends Controller
     {
         $category = $this->categoryService->update($request->all(), $id);
 
-        if(!$category){
-            return response()->json(['message'=>"Update Category fail"],400);
-        }
 
-        return response()->json(['message'=>"Update Category successfully"],200);
+        return response()->json(['message'=>"Cập nhật category thành công"],200);
     }
 
     /**
@@ -68,10 +57,6 @@ class CategoryController extends Controller
     {
         $category = $this->categoryService->destroy($id);
 
-        if(!$category){
-            return response()->json(['message'=>"Delete Category fail"],400);
-        }
-
-        return response()->json(['message'=>"Delete Category successfully"],200);
+        return response()->json(['message'=>"Xóa category thành công"],200);
     }
 }

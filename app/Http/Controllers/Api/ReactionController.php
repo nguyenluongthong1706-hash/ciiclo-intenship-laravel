@@ -14,20 +14,12 @@ class ReactionController extends Controller
     public function makeReaction ($post_id, MakeReactionRequest $request){
         $reaction = $this->reactionService->makeReaction($request->user()->id, $post_id, $request->validated());
 
-        if(!$reaction){
-            return response()->json(['message'=>"Make reaction fail"],400);
-        }
-
-        return response()->json(['message'=>"Make reaction successfully"],200);
+        return response()->json(['message'=>"Thực hiện phản hồi thành công"],200);
     }
 
     public function deleteReaction($post_id, Request $request){
         $reaction = $this->reactionService->deleteReaction($request->user()->id, $post_id);
 
-        if(!$reaction){
-            return response()->json(['message'=>"Delete reaction fail"],400);
-        }
-
-        return response()->json(['message'=>"Delete reaction successfully"],200);
+        return response()->json(['message'=>"Xóa phản hồi thành công"],200);
     }
 }

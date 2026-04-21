@@ -1,6 +1,8 @@
 <?php
 namespace App\Repositories;
 
+use App\Exceptions\SystemException;
+
 abstract class Repository {
     protected $model;
 
@@ -9,15 +11,15 @@ abstract class Repository {
     }
 
     public function find($id){
-        return $this->model->find($id);
+        return $this->model->findOrFail($id);
     }
 
     public function update(array $data, $id){
-        $curentModel = $this->model->findOrFail($id);
+        $currentModel = $this->model->findOrFail($id);
 
-        $curentModel->update($data);   
+        $currentModel->update($data);   
         
-        return $curentModel;
+        return $currentModel;
     }
 
     public function create(array $data){
@@ -25,6 +27,9 @@ abstract class Repository {
     }
 
     public function delete($id){
-        return $this->model->destroy($id);
+        $model = $this->model->findOrFail($id);
+        $model->delete();
+
+        return true;
     }
 }

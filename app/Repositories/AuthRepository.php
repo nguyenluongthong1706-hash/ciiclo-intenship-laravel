@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Exceptions\BusinessException;
 use App\Models\User;
 
 class AuthRepository extends Repository{

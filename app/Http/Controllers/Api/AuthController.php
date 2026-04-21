@@ -15,28 +15,14 @@ class AuthController extends Controller
     public function register(RegisterRequest $request){
 
         $user = $this->authService->register($request->validated());
-        
-        if(!$user){
-            return response()->json([
-                'message'=>'register fail',
-            ], 400);
-        }
 
         return response()->json([
-            'message'=>'register successfully',
+            'message'=>'Đăng ký thành công',
         ],200);
     }
 
     public function login(LoginRequest $request){
         $user = $this->authService->login($request->validated());
-
-        if(!$user){
-            return response()->json([
-                'message'=>'Invalid Credentials',
-                'user'=>null,
-                'token'=>null,
-                ], 401);
-        }
 
         $user->tokens()->delete();
 
@@ -44,8 +30,8 @@ class AuthController extends Controller
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
-            'message'=>'Login successfully',
-            'user'=>$user,
+            'message'=>'Đăng nhập thành công',
+            'data'=>$user,
             'token'=>$token,
         ],200);
     }
@@ -53,7 +39,7 @@ class AuthController extends Controller
     public function logout(Request $request){
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json(['message'=>"logged out successfully"],200);
+        return response()->json(['message'=>"Đăng xuất thành công"],200);
     }
 
 }
