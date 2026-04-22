@@ -9,13 +9,13 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ReactionController;
 
 Route::get('/', function(){
-    return "Wellcome our app";
+    return "Well come our app";
 });
 
 Route::controller(AuthController::class)->group(function(){
     Route::prefix('auth')->group(function(){
-        Route::post('/register', 'register');
-        Route::post('/login','login');
+        Route::post('/register', 'register')->middleware('throttle:3,1');
+        Route::post('/login','login')->middleware('throttle:login');
     });
 });
 
@@ -33,14 +33,12 @@ Route::middleware(['auth:sanctum'])->group(function(){
     });
 
     Route::prefix('posts')->group(function(){
-        Route::post('/{post_id}/reactions',[ReactionController::class, 'makeReaction']);
-        Route::put('/{post_id}/reactions',[ReactionController::class,'makeReaction']);
+        Route::post('/{post_id}/reactions',[ReactionController::class, 'makeReaction'])->middleware('throttle:10,1');
+        Route::put('/{post_id}/reactions',[ReactionController::class,'makeReaction'])->middleware('throttle:10,1');
         Route::delete('/{post_id}/reactions',[ReactionController::class,'deleteReaction']);
     });
+
     Route::apiResource('posts', PostController::class);
 
-
     Route::apiResource('categories', CategoryController::class);
-
-
 });

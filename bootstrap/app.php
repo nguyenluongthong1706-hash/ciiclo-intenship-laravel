@@ -11,8 +11,6 @@ use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Access\AuthorizationException;
-use PDOException;
-use ParseError;
 use Illuminate\Http\Request;
 
 
