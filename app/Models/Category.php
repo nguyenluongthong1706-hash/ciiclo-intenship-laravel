@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 #[Table('categories')]
-#[Fillable(['name'])]
+#[Fillable(['name', 'is_active'])]
 class Category extends Model
 {
     use HasFactory, HasUuids;

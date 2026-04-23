@@ -13,7 +13,7 @@ class AuthService  {
         $user = $this->authRepository->findByEmail($data['email']);
         
         if($user){
-            throw new \BusinessException("Email không tồn tại trong hệ thống",1000,);
+            throw new \BusinessException("Email không tồn tại trong hệ thống");
         }
 
         $data['password'] = Hash::make($data['password']);

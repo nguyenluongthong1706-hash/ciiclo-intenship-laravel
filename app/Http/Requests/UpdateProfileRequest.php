@@ -37,6 +37,8 @@ class UpdateProfileRequest extends FormRequest
             'avatar.image' => 'Avatar phải là hình ảnh',
             'avatar.mimes' => 'Avatar phải có định dạng jpg, jpeg hoặc png',
             'avatar.max' => 'Avatar không được vượt quá :max KB',
+
+            'is_active' => 'Trạng thái hoạt động không đúng định dạng',
         ];
     }
 }

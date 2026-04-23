@@ -29,6 +29,7 @@ class PostResource extends JsonResource
                 'id' => $this->author?->id,
                 'name' => $this->author?->name,
             ],
+            'is_active' => $this->is_active,
 
             'reaction_count' => [
                 'like' => $reactions->where('type', 'like')->count(),

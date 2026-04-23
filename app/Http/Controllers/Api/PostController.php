@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\PostService;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Requests\UpdateObjectStatus;
 use App\Http\Resources\PostResource;
 
 class PostController extends Controller
@@ -60,6 +61,12 @@ class PostController extends Controller
         $post = $this->postService->update($request->validated(),$id);
 
         return response()->json(['message'=>"Cập nhật bài đăng thành công!"], 200);
+    }
+
+    public function updateStatus(UpdateObjectStatus $request, string $id){
+        $user = $this->postService->update($request->validated(),$id);
+
+        return response()->json(['message'=>"Cập nhật trạng thái thành công!"], 200);
     }
 
     /**

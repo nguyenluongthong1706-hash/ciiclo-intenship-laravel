@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Sanctum\HasApiTokens;
 
 #[Table('users')]
-#[Fillable(['name','email','password','role','avatar'])]
+#[Fillable(['name','email','password','role','avatar','is_active'])]
 #[Hidden(['password','remember_token'])]
 class User extends Model
 {

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
+use App\Http\Requests\UpdateObjectStatus;
+use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -22,9 +25,9 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
-        $category = $this->categoryService->store($request->all());
+        $category = $this->categoryService->store($request->validated());
 
         return response()->json(['message'=>"Tạo category thành công"],201);
     }
@@ -42,12 +45,20 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
+    {
+        $category = $this->categoryService->update($request->validated(), $id);
+
+
+        return response()->json(['message'=>"Cập nhật category thành công"],200);
+    }
+
+    public function updateStatus(UpdateObjectStatus $request, string $id)
     {
         $category = $this->categoryService->update($request->all(), $id);
 
 
-        return response()->json(['message'=>"Cập nhật category thành công"],200);
+        return response()->json(['message'=>"Cập nhật trạng thái thành công"],200);
     }
 
     /**

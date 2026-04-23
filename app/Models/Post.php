@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 #[Table('posts')]
-#[Fillable(['title', 'content', 'author_id','category_id'])]
+#[Fillable(['title', 'content', 'is_active', 'author_id','category_id'])]
 class Post extends Model
 {
     use HasFactory, HasUuids;
