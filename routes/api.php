@@ -38,7 +38,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     });
     Route::apiResource('users', UserController::class);
 
-    Route::put('users/{user_id}/status',[UserController::class, 'updateStatus']);
+    Route::put('users/{user_id}/status',[UserController::class, 'updateStatus'])->middleware('isAdmin');
 
     Route::prefix('posts')->group(function(){
         Route::post('/{post_id}/reactions',[ReactionController::class, 'makeReaction'])->middleware('throttle:reaction');
@@ -48,9 +48,9 @@ Route::middleware(['auth:sanctum'])->group(function(){
     
     Route::apiResource('posts', PostController::class)->only(['store','update','destroy']);
 
-    Route::put('posts/{post_id}/status',[PostController::class, 'updateStatus']);
+    Route::put('posts/{post_id}/status',[PostController::class, 'updateStatus'])->middleware('isAdmin');
 
     Route::apiResource('categories', CategoryController::class);
 
-    Route::put('categories/{category_id}/status',[CategoryController::class, 'updateStatus']);
+    Route::put('categories/{category_id}/status',[CategoryController::class, 'updateStatus'])->middleware('isAdmin');
 });

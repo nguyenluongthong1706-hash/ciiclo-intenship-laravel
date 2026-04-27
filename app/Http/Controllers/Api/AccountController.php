@@ -35,7 +35,7 @@ class AccountController extends Controller
         $user = $this->accountService->show($request->user()->id);
         $this->authorize('update', $user);
 
-        $result = $uploadAvatarService->updateImage($user->public_id, $request->file('avatar'));
+        $result = $uploadAvatarService->updateImage($user->avatar_public_id, $request->file('avatar'));
 
         $user = $this->accountService->updateProfile(
             [ 
