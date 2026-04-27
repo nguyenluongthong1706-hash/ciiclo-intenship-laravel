@@ -13,6 +13,7 @@ class AuthController extends Controller
     public function __construct(private AuthService $authService){}
     
     public function register(RegisterRequest $request){
+        $this->authorize('create', \App\Models\User::class);
 
         $user = $this->authService->register($request->validated());
 

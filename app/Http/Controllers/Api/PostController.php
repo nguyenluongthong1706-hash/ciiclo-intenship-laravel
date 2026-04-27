@@ -30,6 +30,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        $this->authorize('create', \App\Models\Post::class);
 
         $post = $this->postService->store($request->validated(), $request->user()->id);
 
@@ -38,6 +39,8 @@ class PostController extends Controller
 
     public function getByUser(Request $request)
     {
+        $this->authorize('viewAny', \App\Models\Post::class);
+
         $posts = $this->postService->getByUser($request->user()->id);
 
         return response()->json(['message'=>"Lấy thông tin danh sách bài đăng của tài khoản thành công!", 'data'=>PostResource::collection($posts)],200);
@@ -49,6 +52,9 @@ class PostController extends Controller
     public function show(string $id)
     {
         $post = $this->postService->show($id);
+        $this->authorize('view', $post);
+
+        $post = $this->postService->show($id);
 
         return response()->json(['message'=>"Lấy thông tin bài đăng thành công!", 'data'=>$post],200);
     }
@@ -58,12 +64,18 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, string $id)
     {
+        $post = $this->postService->show($id);
+        $this->authorize('update', $post);
+
         $post = $this->postService->update($request->validated(),$id);
 
         return response()->json(['message'=>"Cập nhật bài đăng thành công!"], 200);
     }
 
     public function updateStatus(UpdateObjectStatus $request, string $id){
+        $post = $this->postService->show($id);
+        $this->authorize('update', $post);
+
         $user = $this->postService->update($request->validated(),$id);
 
         return response()->json(['message'=>"Cập nhật trạng thái thành công!"], 200);
@@ -74,6 +86,9 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
+        $post = $this->postService->show($id);
+        $this->authorize('delete', $post);
+
         $post = $this->postService->destroy($id);
 
         return response()->json(['message'=>"Xóa bài đăng thành công!"],200);

@@ -13,4 +13,8 @@ class AccountService{
     public function updateProfile(array $data, $id){
         return $this->accountRepository->update($data, $id);
     }
+
+    public function show($id){
+        return $this->accountRepository->find($id);
+    }
 }

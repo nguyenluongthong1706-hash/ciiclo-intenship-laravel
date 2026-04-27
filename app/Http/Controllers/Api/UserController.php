@@ -26,6 +26,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', \App\Models\Post::class);
+
         $user = $this->userService->store($request->validated(), $request->user()->id);
 
         return response()->json(['message'=>"Tạo tài khoản thành công!"],201);
@@ -37,6 +39,9 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = $this->userService->show($id);
+        $this->authorize('view', $user);
+
+        $user = $this->userService->show($id);
 
         return response()->json(['message'=>"Lấy thông tin tài khoản thành công!", 'data'=>$user],200);
     }
@@ -46,12 +51,18 @@ class UserController extends Controller
      */
     public function update(UpdateProfileRequest $request, string $id)
     {
+        $user = $this->userService->show($id);
+        $this->authorize('update', $user);
+
         $user = $this->userService->update($request->validated(),$id);
 
         return response()->json(['message'=>"Cập nhật tài khoản thành công!"], 200);
     }
 
     public function updateStatus(UpdateObjectStatus $request, string $id){
+        $user = $this->userService->show($id);
+        $this->authorize('update', $user);
+
         $user = $this->userService->update($request->validated(),$id);
 
         return response()->json(['message'=>"Cập nhật trạng thái thành công!"], 200);
@@ -62,6 +73,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        $user = $this->userService->show($id);
+        $this->authorize('delete', $user);
+
         $user = $this->userService->destroy($id);
 
         return response()->json(['message'=>"Xóa tài khoản thành công!"],200);

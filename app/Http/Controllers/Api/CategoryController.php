@@ -17,6 +17,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', \App\Models\Category::class);
+
         $categories = $this->categoryService->getAll();
 
         return response()->json(['message'=>"Lấy danh sách category thành công", 'data'=>$categories],200);
@@ -27,6 +29,8 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
+        $this->authorize('create', \App\Models\Category::class);
+
         $category = $this->categoryService->store($request->validated());
 
         return response()->json(['message'=>"Tạo category thành công"],201);
@@ -38,6 +42,9 @@ class CategoryController extends Controller
     public function show(string $id)
     {
         $category = $this->categoryService->show($id);
+        $this->authorize('view', $category);
+
+        $category = $this->categoryService->show($id);
 
         return response()->json(['message'=>"Lấy category thành công", 'data'=>$category],200);
     }
@@ -47,6 +54,9 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
+        $category = $this->categoryService->show($id);
+        $this->authorize('update', $category);
+
         $category = $this->categoryService->update($request->validated(), $id);
 
 
@@ -55,6 +65,9 @@ class CategoryController extends Controller
 
     public function updateStatus(UpdateObjectStatus $request, string $id)
     {
+        $category = $this->categoryService->show($id);
+        $this->authorize('update', $category);
+
         $category = $this->categoryService->update($request->all(), $id);
 
 
@@ -66,6 +79,9 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
+        $category = $this->categoryService->show($id);
+        $this->authorize('delete', $category);
+
         $category = $this->categoryService->destroy($id);
 
         return response()->json(['message'=>"Xóa category thành công"],200);

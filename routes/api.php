@@ -13,12 +13,15 @@ Route::get('/', function(){
     return "Well come our app";
 });
 
-Route::controller(AuthController::class)->group(function(){
+Route::controller(AuthController::class)->middleware('throttle:auth')->group(function(){
     Route::prefix('auth')->group(function(){
-        Route::post('/register', 'register')->middleware('throttle:3,1');
-        Route::post('/login','login')->middleware('throttle:login');
+        Route::post('/register', 'register');
+        Route::post('/login','login');
     });
 });
+
+Route::get('posts',[PostController::class, 'index']);
+Route::get('posts/{post_id}',[PostController::class, 'show']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     // define logout route
@@ -29,6 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::prefix('users')->group(function(){
             Route::get('/me', 'getProfile');
             Route::put('/me', 'updateProfile');
+            Route::put('/avatar','uploadAvatar');
             Route::get('/posts',[PostController::class, 'getByUser']);
         });
     });
@@ -42,7 +46,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::delete('/{post_id}/reactions',[ReactionController::class,'deleteReaction']);
     });
     
-    Route::apiResource('posts', PostController::class);
+    Route::apiResource('posts', PostController::class)->only(['store','update','destroy']);
 
     Route::put('posts/{post_id}/status',[PostController::class, 'updateStatus']);
 
