@@ -17,7 +17,7 @@ class IsAdmin
     {
         $user = $request->user();
 
-        if(!user || user->role !== "ADMIN"){
+        if(!$user || $user->role !== "ADMIN"){
              return response()->json([
                 'message' => 'Bạn không có quyền truy cập (Admin only)'
             ], 403);

@@ -13,14 +13,19 @@ class AccountController extends Controller
 {
     public function __construct (private AccountService $accountService){}
 
-    public function getProfile (Request $request){
-        $user = $this->accountService->show($request->user()->id);
-        $this->authorize('view', $user);
-
-        $user = $this->accountService->find($request->user()->id);
-
-        return response()->json(['message'=>"Lấy thông tin tài khoản thành công", 'data'=>$user],200);
+    public function getProfile()
+    {
+        return response()->json(['message'=>"Lấy thông tin tài khoản thành công", 'data'=>auth('api')->user()],200);
     }
+
+    // public function getProfile (Request $request){
+    //     $user = $this->accountService->show($request->user()->id);
+    //     $this->authorize('view', $user);
+
+    //     $user = $this->accountService->find($request->user()->id);
+
+    //     return response()->json(['message'=>"Lấy thông tin tài khoản thành công", 'data'=>$user],200);
+    // }
 
     public function updateProfile (UpdateProfileRequest $request){
         $user = $this->accountService->show($request->user()->id);

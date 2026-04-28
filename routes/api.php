@@ -23,7 +23,7 @@ Route::controller(AuthController::class)->middleware('throttle:auth')->group(fun
 Route::get('posts',[PostController::class, 'index']);
 Route::get('posts/{post_id}',[PostController::class, 'show']);
 
-Route::middleware(['auth:sanctum'])->group(function(){
+Route::middleware(['auth:api'])->group(function(){
     // define logout route
     Route::post('auth/logout',[AuthController::class, 'logout']);
 
@@ -36,6 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
             Route::get('/posts',[PostController::class, 'getByUser']);
         });
     });
+    
     Route::apiResource('users', UserController::class);
 
     Route::put('users/{user_id}/status',[UserController::class, 'updateStatus'])->middleware('isAdmin');

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\AuthService;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -23,24 +24,47 @@ class AuthController extends Controller
     }
 
     public function login(LoginRequest $request){
-        $user = $this->authService->login($request->validated());
+        $token = $this->authService->login($request->validated());
 
-        $user->tokens()->delete();
-
-        // create token and get token by text for client
-        $token = $user->createToken('api-token')->plainTextToken;
+        $user = JWTAuth::setToken($token)->toUser();
 
         return response()->json([
             'message'=>'Đăng nhập thành công',
             'data'=>$user,
-            'token'=>$token,
+            'token' => $token
         ],200);
     }
 
-    public function logout(Request $request){
-        $request->user()->currentAccessToken()->delete();
+    // public function login(LoginRequest $request){
+    //     $user = $this->authService->login($request->validated());
+
+    //     $user->tokens()->delete();
+
+    //     // create token and get token by text for client
+    //     $token = $user->createToken('api-token')->plainTextToken;
+
+    //     return response()->json([
+    //         'message'=>'Đăng nhập thành công',
+    //         'data'=>$user,
+    //         'token'=>$token,
+    //     ],200);
+    // }
+
+    public function logout()
+    {
+        auth('api')->logout();
 
         return response()->json(['message'=>"Đăng xuất thành công"],200);
     }
 
+    // public function logout(Request $request){
+    //     $request->user()->currentAccessToken()->delete();
+
+    //     return response()->json(['message'=>"Đăng xuất thành công"],200);
+    // }
+
+    public function refresh()
+    {
+        return $this->respondWithToken(auth('api')->refresh());
+    }
 }

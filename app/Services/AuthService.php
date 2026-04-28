@@ -21,12 +21,20 @@ class AuthService  {
     }
 
     public function login(array $data){
-        $user = $this->authRepository->findByEmail($data['email']);
-
-        if (!$user || !Hash::check($data['password'], $user->password)) {
-            throw new BusinessException("Email hay Password không chính xác");
+        if (! $token = auth('api')->attempt($data)) {
+            throw new BusinessException("Sai email hoặc password");
         }
 
-        return $user;
+        return $token;
     }
+
+    // public function login(array $data){
+    //     $user = $this->authRepository->findByEmail($data['email']);
+
+    //     if (!$user || !Hash::check($data['password'], $user->password)) {
+    //         throw new BusinessException("Email hay Password không chính xác");
+    //     }
+
+    //     return $user;
+    // }
 }
