@@ -10,6 +10,7 @@ use Illuminate\Validation\Rules\Password;
 use App\Services\UploadImageService;
 use App\Services\UploadImageCloudinaryService;
 use App\Services\UploadImageMinioService;
+use App\Services\UploadImagePublicLocalService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             UploadImageService::class,
-            UploadImageCloudinaryService::class
+            UploadImagePublicLocalService::class
         );
     }
 
